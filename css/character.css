@@ -1,0 +1,1069 @@
+/* 角色创建页面样式 - rpg-dnd5e-web 石板风格 */
+
+/* 角色创建容器 */
+.character-creation-page {
+  background: linear-gradient(180deg, #1a1d2e 0%, #0f1119 100%);
+  padding-bottom: var(--spacing-xl);
+}
+
+/* 步骤指示器 - 简洁冷蓝风格 */
+.creation-progress {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-sm) var(--spacing-md);
+  overflow-x: auto;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-default);
+  -webkit-overflow-scrolling: touch;
+}
+
+.creation-step {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-xs) var(--spacing-md);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  opacity: 0.5;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.creation-step.active {
+  opacity: 1;
+  border-color: var(--accent-primary);
+  background: rgba(74, 142, 194, 0.1);
+}
+
+.creation-step.completed {
+  opacity: 0.8;
+}
+
+.creation-step.completed .step-number {
+  background: var(--color-success);
+  color: white;
+}
+
+.step-number {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent-primary);
+  color: white;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.step-info {
+  display: none;
+}
+
+.step-title {
+  font-size: 0.8rem;
+  color: var(--text-primary);
+}
+
+.step-subtitle {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.creation-step.active .step-info {
+  display: block;
+}
+
+/* 创建内容区 */
+#creation-content {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: var(--spacing-lg);
+}
+
+#creation-content > .btn {
+  display: block;
+  width: 100%;
+  margin-top: var(--spacing-lg);
+}
+
+/* ===== ChoiceCard 风格 - 种族/职业选择 ===== */
+.choice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-md);
+}
+
+.choice-card {
+  min-width: 180px;
+  padding: var(--spacing-lg);
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  background: var(--bg-card);
+  border: 2px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 稀有度边框 */
+.choice-card.rarity-common {
+  border-color: var(--rarity-common);
+}
+
+.choice-card.rarity-uncommon {
+  border-color: var(--rarity-uncommon);
+}
+
+.choice-card.rarity-rare {
+  border-color: var(--rarity-rare);
+}
+
+.choice-card.rarity-epic {
+  border-color: var(--rarity-epic);
+}
+
+.choice-card.rarity-legendary {
+  border-color: var(--rarity-legendary);
+}
+
+.choice-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+  background: var(--bg-card-hover);
+}
+
+.choice-card.selected,
+.choice-card.tap-selected {
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-2px);
+}
+
+.choice-card.selected::before,
+.choice-card.tap-selected::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-primary-light));
+  z-index: -1;
+  opacity: 0.2;
+}
+
+.choice-icon {
+  font-size: 2.5rem;
+  margin-bottom: var(--spacing-sm);
+}
+
+.choice-name {
+  font-family: var(--font-title);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--accent-primary-light);
+  margin-bottom: var(--spacing-sm);
+}
+
+.choice-bonuses {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--spacing-xs);
+}
+
+.choice-bonuses span {
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  color: var(--accent-primary);
+}
+
+/* ===== 种族选择 - 继承 ChoiceCard 样式 ===== */
+.race-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-md);
+}
+
+.race-card {
+  composes: choice-card;
+}
+
+.race-icon {
+  composes: choice-icon;
+}
+
+.race-name {
+  composes: choice-name;
+}
+
+.race-bonuses {
+  composes: choice-bonuses;
+}
+
+/* ===== 子种族选择 ===== */
+.subrace-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.subrace-card {
+  padding: var(--spacing-lg);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+.subrace-card:hover {
+  transform: translateX(8px);
+  box-shadow: var(--shadow-glow);
+  border-color: var(--accent-primary);
+}
+
+.subrace-name {
+  font-family: var(--font-title);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--accent-primary-light);
+  margin-bottom: var(--spacing-sm);
+}
+
+.subrace-bonuses {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.subrace-bonuses span {
+  font-size: 0.85rem;
+  color: var(--color-success);
+  background: rgba(76, 175, 125, 0.1);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(76, 175, 125, 0.3);
+}
+
+/* ===== 性别选择 - 保持横排 ===== */
+.gender-row {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-md);
+}
+
+.gender-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--spacing-md) var(--spacing-xl);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  min-width: 80px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.gender-option:hover {
+  border-color: var(--accent-primary);
+  background: var(--bg-card-hover);
+  box-shadow: var(--shadow-glow);
+}
+
+.gender-option.selected,
+.gender-option.tap-selected {
+  border-color: var(--accent-primary);
+  background: rgba(74, 142, 194, 0.15);
+}
+
+.gender-option-icon {
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--accent-primary);
+}
+
+.gender-option-name {
+  font-size: 0.9rem;
+  margin-top: var(--spacing-xs);
+  color: var(--text-primary);
+}
+
+/* ===== 职业选择 - 继承 ChoiceCard 样式 ===== */
+.class-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-md);
+}
+
+.class-card {
+  composes: choice-card;
+  padding: var(--spacing-lg);
+  text-align: center;
+}
+
+.class-icon {
+  font-size: 2rem;
+  margin-bottom: var(--spacing-sm);
+}
+
+.class-name {
+  font-family: var(--font-title);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--accent-primary-light);
+  margin-bottom: var(--spacing-xs);
+}
+
+.class-info {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.class-dice {
+  font-size: 0.75rem;
+  color: var(--color-info);
+}
+
+.spellcaster-tag {
+  font-size: 0.7rem;
+  color: var(--rarity-epic);
+  background: rgba(156, 109, 222, 0.1);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  margin-top: 4px;
+  display: inline-block;
+}
+
+/* ===== AnimatedStat 风格 - 属性分配 ===== */
+.attribute-mode-selector {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-xl);
+}
+
+.mode-btn {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  font-family: var(--font-title);
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.mode-btn.active {
+  color: white;
+  background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-primary-dark) 100%);
+  border-color: var(--accent-primary-light);
+  box-shadow: var(--shadow-glow);
+}
+
+.mode-btn:not(.active):hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+/* 属性卡片 - 大号数字风格 */
+.attributes-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.attribute-card {
+  padding: var(--spacing-md);
+  text-align: center;
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-fast);
+  position: relative;
+  overflow: hidden;
+}
+
+.attribute-card:hover {
+  box-shadow: var(--shadow-glow);
+  border-color: var(--accent-primary);
+}
+
+.attr-name {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-xs);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.attr-value {
+  font-family: var(--font-number);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.attr-modifier {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: var(--spacing-xs);
+}
+
+.attr-modifier.positive {
+  color: var(--color-success);
+}
+
+.attr-modifier.negative {
+  color: var(--color-danger);
+}
+
+.attr-roll-btn {
+  margin-top: var(--spacing-sm);
+  padding: var(--spacing-xs) var(--spacing-md);
+  font-size: 1.2rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  color: var(--accent-primary);
+}
+
+.attr-roll-btn:hover {
+  background: var(--accent-primary);
+  color: white;
+  border-color: var(--accent-primary);
+}
+
+.attr-roll-btn.rolling {
+  animation: shake 0.5s ease-in-out infinite;
+}
+
+.attr-adjust-group {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-sm);
+}
+
+.attr-adjust {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: bold;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  color: var(--accent-primary);
+}
+
+.attr-adjust:hover:not(:disabled) {
+  background: var(--accent-primary);
+  color: white;
+}
+
+.attr-adjust:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.attributes-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-md);
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-default);
+}
+
+.attributes-total strong {
+  color: var(--accent-primary);
+  font-size: 1.2rem;
+}
+
+/* ===== TraitBadge 风格 - 技能/特性标签 ===== */
+.skill-selection-info {
+  text-align: center;
+  margin-bottom: var(--spacing-md);
+  color: var(--text-secondary);
+}
+
+.skill-selection-info strong {
+  color: var(--accent-primary);
+}
+
+.skill-bg-info {
+  font-size: 0.85rem;
+  color: var(--color-info);
+  margin-top: 4px;
+}
+
+.skill-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-lg);
+}
+
+.skill-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: center;
+}
+
+.skill-card:hover {
+  border-color: var(--accent-primary);
+  background: var(--bg-card-hover);
+}
+
+.skill-card.selected,
+.skill-card.tap-selected {
+  background: var(--accent-primary);
+  color: white;
+  border-color: var(--accent-primary-light);
+  box-shadow: var(--shadow-glow);
+}
+
+.skill-card .skill-name {
+  font-weight: 500;
+}
+
+.skill-card .skill-attr {
+  font-size: 0.7rem;
+  opacity: 0.6;
+  text-transform: uppercase;
+}
+
+.btn-confirm-skills {
+  width: 100%;
+  margin-top: var(--spacing-md);
+}
+
+/* ===== 法术选择 ===== */
+.spell-selection {
+  margin-bottom: var(--spacing-md);
+}
+
+.spell-section {
+  margin-bottom: var(--spacing-lg);
+}
+
+.spell-section-title {
+  font-size: 1rem;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.spell-count-hint {
+  font-size: 0.8rem;
+  color: var(--color-warning);
+  font-weight: normal;
+}
+
+.spell-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-sm);
+}
+
+.spell-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: center;
+}
+
+.spell-card.spell-cantrip {
+  border-left: 3px solid #4a8ec2;
+}
+
+.spell-card.spell-level1 {
+  border-left: 3px solid #3a6fa0;
+}
+
+.spell-card:hover {
+  border-color: var(--accent-primary);
+  background: var(--bg-card-hover);
+}
+
+.spell-card.selected,
+.spell-card.tap-selected {
+  background: var(--accent-primary);
+  color: white;
+  border-color: var(--accent-primary-light);
+  box-shadow: var(--shadow-glow);
+}
+
+.spell-card .spell-name {
+  font-weight: 500;
+}
+
+.btn-confirm-spells {
+  width: 100%;
+  margin-top: var(--spacing-md);
+}
+
+/* ===== 确认页技能/法术标签 ===== */
+.character-skills,
+.character-spells {
+  margin-bottom: var(--spacing-md);
+}
+
+.character-skills h4,
+.character-spells h4 {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.skill-tags,
+.spell-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+}
+
+.skill-tag {
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  background: rgba(74, 142, 194, 0.15);
+  color: var(--accent-primary-light);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(74, 142, 194, 0.3);
+}
+
+.spell-tag {
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+}
+
+.spell-cantrip-tag {
+  background: rgba(74, 142, 194, 0.15);
+  color: #4a8ec2;
+  border: 1px solid rgba(74, 142, 194, 0.3);
+}
+
+.spell-level1-tag {
+  background: rgba(58, 111, 160, 0.15);
+  color: #5a9fd4;
+  border: 1px solid rgba(58, 111, 160, 0.3);
+}
+
+/* ===== 背景选择 ===== */
+.background-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.background-card {
+  padding: var(--spacing-lg);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+.background-card:hover {
+  transform: translateX(8px);
+  box-shadow: var(--shadow-glow);
+  border-color: var(--accent-primary);
+}
+
+.background-card.selected,
+.background-card.tap-selected {
+  border-color: var(--accent-primary);
+  background: rgba(74, 142, 194, 0.1);
+}
+
+.bg-name {
+  font-family: var(--font-title);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--color-warning);
+  margin-bottom: var(--spacing-sm);
+}
+
+.bg-skills, .bg-feature {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-top: var(--spacing-xs);
+}
+
+.bg-skills {
+  color: var(--color-info);
+}
+
+/* ===== 地点选择 ===== */
+.location-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.location-card {
+  padding: var(--spacing-lg);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+.location-card:hover {
+  transform: translateX(8px);
+  box-shadow: var(--shadow-glow);
+  border-color: var(--accent-primary);
+}
+
+.location-card.selected,
+.location-card.tap-selected {
+  border-color: var(--accent-primary);
+  background: rgba(74, 142, 194, 0.1);
+}
+
+.location-name {
+  font-family: var(--font-title);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--color-info);
+  margin-bottom: var(--spacing-sm);
+}
+
+.location-desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* ===== 姓名输入 ===== */
+.name-input-container {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+}
+
+.name-input {
+  width: 100%;
+  max-width: 300px;
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-family: var(--font-title);
+  font-size: 1.5rem;
+  text-align: center;
+  color: var(--text-primary);
+  background: var(--bg-card);
+  border: 2px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  outline: none;
+  transition: all var(--transition-fast);
+}
+
+.name-input:focus {
+  border-color: var(--accent-primary);
+  box-shadow: var(--shadow-glow);
+}
+
+.name-input::placeholder {
+  color: var(--text-muted);
+}
+
+.name-hint {
+  margin-top: var(--spacing-sm);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.name-suggestions {
+  text-align: center;
+}
+
+.name-suggestions p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.suggestion-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--spacing-sm);
+}
+
+.suggestion-btn {
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-family: var(--font-title);
+  font-size: 0.9rem;
+  color: var(--accent-primary);
+  background: transparent;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.suggestion-btn:hover {
+  background: rgba(74, 142, 194, 0.1);
+  border-color: var(--accent-primary);
+}
+
+/* ===== 角色预览 ===== */
+.character-preview {
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+  text-align: center;
+}
+
+.preview-avatar {
+  margin-bottom: var(--spacing-md);
+}
+
+.avatar-placeholder {
+  font-size: 4rem;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+  background: var(--bg-secondary);
+  border: 2px solid var(--accent-primary);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preview-name {
+  font-family: var(--font-title);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent-primary-light);
+  margin-bottom: var(--spacing-xs);
+}
+
+.preview-subtitle {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.character-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-lg);
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--spacing-sm);
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-default);
+}
+
+.stat-row span:first-child {
+  color: var(--text-secondary);
+}
+
+.stat-row span:last-child {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.character-attributes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-lg);
+}
+
+.attr-mini {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--spacing-sm);
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-default);
+}
+
+.attr-mini .attr-name {
+  font-size: 0.7rem;
+  margin-bottom: 2px;
+}
+
+.attr-mini .attr-value {
+  font-size: 1.2rem;
+}
+
+.character-traits {
+  margin-bottom: var(--spacing-lg);
+}
+
+.character-traits h4,
+.character-background h4 {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.traits-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+}
+
+.trait-tag {
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+}
+
+.confirmation-buttons {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.confirmation-buttons .btn {
+  flex: 1;
+}
+
+/* ===== CollapsibleSection 风格 ===== */
+.collapsible-section {
+  margin-bottom: var(--spacing-md);
+}
+
+.collapsible-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-md);
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.collapsible-header:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--accent-primary);
+}
+
+.collapsible-title {
+  font-family: var(--font-title);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--accent-primary-light);
+}
+
+.collapsible-arrow {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  transition: transform var(--transition-fast);
+}
+
+.collapsible-section.open .collapsible-arrow {
+  transform: rotate(180deg);
+}
+
+.collapsible-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height var(--transition-normal);
+}
+
+.collapsible-section.open .collapsible-content {
+  max-height: 500px;
+}
+
+/* ===== 触屏反馈 ===== */
+.race-card:active,
+.subrace-card:active,
+.gender-option:active,
+.class-card:active,
+.background-card:active,
+.location-card:active,
+.suggestion-btn:active,
+.mode-btn:active,
+.attr-roll-btn:active,
+.skill-btn:active,
+.card:active,
+.btn:active {
+  opacity: 0.7;
+  transform: scale(0.95);
+}
+
+/* ===== 响应式 ===== */
+@media (max-width: 480px) {
+  .choice-grid,
+  .race-grid,
+  .class-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .attributes-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .skill-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .character-attributes {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .confirmation-buttons {
+    flex-direction: column;
+  }
+}

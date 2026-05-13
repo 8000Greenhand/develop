@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0a0f">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="description" content="龙与地下城：暗影冒险 - 一款沉浸式D&D 5e暗黑奇幻角色扮演游戏">
+  
+  <title>龙与地下城：暗影冒险</title>
+  
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="./manifest.json">
+  <link rel="apple-touch-icon" href="./assets/icons/icon-192.svg">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Google Fonts: Noto Sans SC (跨平台支持) -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="./css/character.css">
+  <link rel="stylesheet" href="./css/combat.css">
+  <link rel="stylesheet" href="./css/animations.css">
+  <link rel="stylesheet" href="./css/features.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- ===== 启动画面 ===== -->
+    <div class="page splash-page active" id="page-splash">
+      <div class="splash-bg"></div>
+      <canvas id="particles"></canvas>
+      
+      <div class="splash-content">
+        <div class="splash-logo">
+          <div class="logo-icon">
+            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+              <!-- 龙与骰子图标 -->
+              <path d="M32 8 L40 20 L52 20 L44 28 L48 40 L32 32 L16 40 L20 28 L12 20 L24 20 Z" fill="currentColor"/>
+              <circle cx="32" cy="44" r="12" fill="none" stroke="currentColor" stroke-width="3"/>
+              <circle cx="32" cy="44" r="4" fill="currentColor"/>
+            </svg>
+          </div>
+          <h1 class="splash-title">龙与地下城</h1>
+          <p class="splash-subtitle">暗影冒险</p>
+        </div>
+        
+        <div class="splash-buttons">
+          <button class="btn btn-primary" id="btn-new-game">
+            <span>⚔️</span>
+            <span>新游戏</span>
+          </button>
+          <button class="btn btn-secondary hidden" id="btn-continue">
+            <span>📜</span>
+            <span>继续游戏</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 加载存档画面 ===== -->
+    <div class="page load-page" id="page-load-screen">
+      <header class="page-header">
+        <button class="btn btn-secondary" id="btn-back-to-splash">← 返回</button>
+        <h1 class="page-title">选择存档</h1>
+      </header>
+      <main class="page-content">
+        <div id="saves-list"></div>
+      </main>
+    </div>
+
+    <!-- ===== 角色创建画面 ===== -->
+    <div class="page character-creation-page" id="page-character-creation">
+      <header class="page-header">
+        <button class="btn btn-secondary" id="btn-back-creation">← 返回</button>
+        <h1 class="page-title">创建角色</h1>
+      </header>
+      
+      <div class="creation-progress" id="creation-steps">
+        <!-- 步骤将通过 JS 动态生成 -->
+      </div>
+      
+      <main class="page-content" id="creation-content">
+        <!-- 创建步骤内容将通过 JS 动态生成 -->
+      </main>
+    </div>
+
+    <!-- ===== 游戏画面 ===== -->
+    <div class="page game-page" id="page-game">
+      <!-- 游戏头部 -->
+      <header class="game-header">
+        <div class="player-info">
+          <div class="player-avatar">🧝</div>
+          <div>
+            <div class="player-name" id="player-name">冒险者</div>
+            <div class="player-level" id="player-level">Lv.1</div>
+          </div>
+        </div>
+        <div class="header-actions">
+          <button class="header-btn" id="btn-character" title="角色面板">👤</button>
+          <button class="header-btn" id="btn-backpack" title="背包">🎒</button>
+          <button class="header-btn" id="btn-spellbook" title="法术书">📖</button>
+          <button class="header-btn" id="btn-npc" title="NPC关系">🤝</button>
+          <button class="header-btn" id="btn-short-rest" title="短休">☕</button>
+          <button class="header-btn" id="btn-long-rest" title="长休">🏕️</button>
+          <button class="header-btn" id="btn-save" title="保存">💾</button>
+          <button class="header-btn" id="btn-settings" title="设置">⚙️</button>
+        </div>
+      </header>
+      
+      <!-- 叙事区域 -->
+      <div class="narrative-container" id="narrative-container">
+        <!-- 叙事内容将通过 JS 动态添加 -->
+      </div>
+      
+      <!-- 玩家输入区域 -->
+      <div class="player-input-area" id="player-input-area">
+        <input type="text" id="player-message-input" placeholder="输入你的行动或对话..." autocomplete="off">
+        <button class="btn-send-message" id="btn-send-message">➤</button>
+      </div>
+    </div>
+
+    <!-- ===== 战斗画面 ===== -->
+    <div class="page combat-page" id="page-combat">
+      <header class="page-header">
+        <h1 class="page-title">⚔️ 战斗</h1>
+      </header>
+      
+      <div id="combat-container">
+        <!-- 战斗内容将通过 JS 动态生成 -->
+      </div>
+    </div>
+
+    <!-- ===== 侧边抽屉 ===== -->
+    <!-- 角色面板 -->
+    <div class="drawer drawer-left" id="character-panel">
+      <div class="drawer-backdrop"></div>
+      <div class="drawer-content">
+        <div class="drawer-header">
+          <h3 class="drawer-title">📜 角色面板</h3>
+          <button class="drawer-close">×</button>
+        </div>
+        <div class="drawer-body" id="character-panel-body">
+          <!-- 角色信息将通过 JS 动态生成 -->
+        </div>
+      </div>
+    </div>
+
+    <!-- 背包面板 -->
+    <div class="drawer drawer-right" id="backpack-panel">
+      <div class="drawer-backdrop"></div>
+      <div class="drawer-content">
+        <div class="drawer-header">
+          <h3 class="drawer-title">🎒 背包</h3>
+          <button class="drawer-close">×</button>
+        </div>
+        <div class="drawer-body backpack-content">
+          <div class="icon">🎒</div>
+          <p>背包空空如也</p>
+          <p class="hint">探险中获得物品后会显示在这里</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 法术书面板 -->
+    <div class="drawer drawer-right" id="spellbook-panel">
+      <div class="drawer-backdrop"></div>
+      <div class="drawer-content">
+        <div class="drawer-header">
+          <h3 class="drawer-title">📖 法术书</h3>
+          <button class="drawer-close">×</button>
+        </div>
+        <div class="drawer-body spellbook-content">
+          <div class="spell-empty">
+            <p>暂无已知法术</p>
+            <p class="hint">选择施法职业后将显示法术</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NPC关系面板 -->
+    <div class="drawer drawer-right" id="npc-panel">
+      <div class="drawer-backdrop"></div>
+      <div class="drawer-content">
+        <div class="drawer-header">
+          <h3 class="drawer-title">🤝 NPC关系</h3>
+          <button class="drawer-close">&times;</button>
+        </div>
+        <div class="drawer-body" id="npc-panel-body">
+          <div class="npc-empty">
+            <p>尚未遇到任何NPC</p>
+            <p class="hint">探索世界时会遇到各种角色</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 设置面板 -->
+    <div class="drawer drawer-right" id="settings-panel">
+      <div class="drawer-backdrop"></div>
+      <div class="drawer-content">
+        <div class="drawer-header">
+          <h3 class="drawer-title">⚙️ 设置</h3>
+          <button class="drawer-close">×</button>
+        </div>
+        <div class="drawer-body settings-content">
+          <div class="setting-group">
+            <h4>显示</h4>
+            <div class="setting-item">
+              <label>字体大小</label>
+              <input type="range" min="14" max="20" value="16" id="setting-font-size">
+            </div>
+            <div class="setting-item">
+              <label>动画效果</label>
+              <input type="checkbox" checked id="setting-animations">
+            </div>
+          </div>
+          <div class="setting-group">
+            <h4>音频 (暂未开放)</h4>
+            <div class="setting-item">
+              <label>背景音乐</label>
+              <input type="checkbox" id="setting-music" disabled>
+            </div>
+            <div class="setting-item">
+              <label>音效</label>
+              <input type="checkbox" id="setting-sfx" disabled>
+            </div>
+          </div>
+          <div class="setting-group">
+            <h4>游戏</h4>
+            <div class="setting-item">
+              <label>自动存档</label>
+              <input type="checkbox" checked id="setting-auto-save">
+            </div>
+            <div class="setting-item">
+              <button class="btn-export-save" id="btn-export-save">📤 导出存档</button>
+            </div>
+            <div class="setting-item">
+              <button class="btn-import-save" id="btn-import-save">📥 导入存档</button>
+              <input type="file" id="import-save-input" accept=".txt,.dnd" style="display:none">
+            </div>
+          </div>
+          <div class="setting-group">
+            <h4>🧙 AI DM 设置</h4>
+            <div class="setting-item ai-setting">
+              <label>代理服务器地址</label>
+              <input type="text" id="setting-proxy-url" placeholder="http://服务器IP:8765" class="proxy-input">
+            </div>
+            <div class="setting-item">
+              <button class="btn-test-connection" id="btn-test-ai">测试连接</button>
+              <span class="ai-status" id="ai-status"></span>
+            </div>
+            <div class="setting-item">
+              <label>AI DM 模式</label>
+              <select id="setting-ai-mode">
+                <option value="stream">流式输出（推荐）</option>
+                <option value="normal">普通模式</option>
+                <option value="offline">离线模式</option>
+              </select>
+            </div>
+            <p class="setting-hint">
+              💡 如何启动 AI DM：<br>
+              1. 在云电脑上运行 <code>server/start.sh</code><br>
+              2. 获取云电脑的公网 IP 地址<br>
+              3. 填入上方输入框（如：http://123.45.67.89:8765）<br>
+              4. 点击"测试连接"验证
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 骰子容器 -->
+    <div id="dice-container"></div>
+
+    <!-- 技能检定弹窗 -->
+    <div class="modal" id="skill-check-modal">
+      <div class="modal-backdrop"></div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="skill-check-title">技能检定</h2>
+          <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body" id="skill-check-body">
+          <!-- 动态生成 -->
+        </div>
+      </div>
+    </div>
+
+    <!-- 升级弹窗 -->
+    <div class="modal" id="level-up-modal">
+      <div class="modal-backdrop"></div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title">🎉 升级！</h2>
+          <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body" id="level-up-body">
+          <!-- 动态生成 -->
+        </div>
+      </div>
+    </div>
+
+    <!-- 休息弹窗 -->
+    <div class="modal" id="rest-modal">
+      <div class="modal-backdrop"></div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="rest-modal-title">休息</h2>
+          <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body" id="rest-modal-body">
+          <!-- 动态生成 -->
+        </div>
+      </div>
+    </div>
+
+    <!-- 安装提示 -->
+    <div class="install-prompt" id="install-prompt">
+      <div class="install-text">
+        <strong>安装应用到主屏幕</strong><br>
+        <span>获得更好的游戏体验</span>
+      </div>
+      <button class="install-btn">安装</button>
+      <button class="install-dismiss">×</button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="./js/state-manager.js"></script>
+  <script src="./js/encounter-engine.js"></script>
+  <script src="./js/audio-engine.js"></script>
+  <script src="./js/character.js"></script>
+  <script src="./js/dice.js"></script>
+  <script src="./js/storage.js"></script>
+  <script src="./js/ai-bridge.js"></script>
+  <script src="./js/combat.js"></script>
+  <script src="./js/npc.js"></script>
+  <script src="./js/inventory.js"></script>
+  <script src="./js/ui.js"></script>
+  <script src="./js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,624 @@
+/* 动画效果样式 - rpg-dnd5e-web 简洁风格 */
+
+/* ===== 骰子动画 ===== */
+.dice-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 500;
+  pointer-events: none;
+}
+
+.dice {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-number);
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--accent-primary-light);
+  background: var(--bg-card);
+  border: 2px solid var(--accent-primary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-hover);
+  position: relative;
+}
+
+.dice.rolling {
+  animation: diceRoll 0.1s ease-in-out infinite;
+}
+
+.dice.result {
+  animation: diceResult 0.3s ease;
+}
+
+@keyframes diceRoll {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  25% {
+    transform: rotate(10deg) scale(1.1);
+  }
+  50% {
+    transform: rotate(0deg) scale(1);
+  }
+  75% {
+    transform: rotate(-10deg) scale(1.1);
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+@keyframes diceResult {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.dice-face {
+  color: var(--accent-primary-light);
+  text-shadow: 0 0 10px rgba(74, 142, 194, 0.5);
+}
+
+.dice-20 {
+  background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-elevated) 100%);
+}
+
+.dice-20.rolling {
+  box-shadow: var(--shadow-hover), 0 0 30px rgba(74, 142, 194, 0.4);
+}
+
+/* 多骰子容器 */
+.dice-multiple-container {
+  display: flex;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ===== 暴击特效 - 冷蓝色调 ===== */
+.critical-effect {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 1000;
+  animation: criticalFlash 0.5s ease;
+}
+
+@keyframes criticalFlash {
+  0% {
+    background: radial-gradient(circle, rgba(74, 142, 194, 0.4) 0%, transparent 70%);
+  }
+  100% {
+    background: transparent;
+  }
+}
+
+/* ===== 页面过渡动画 ===== */
+.page-transition-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms ease, transform 300ms ease;
+}
+
+.page-transition-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-transition-exit-active {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 300ms ease, transform 300ms ease;
+}
+
+/* ===== 卡片出现动画 ===== */
+.card-appear {
+  animation: cardAppear 0.4s ease forwards;
+}
+
+@keyframes cardAppear {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ===== 选中高亮动画 - 冷蓝色调 ===== */
+.select-pulse {
+  animation: selectPulse 0.6s ease;
+}
+
+@keyframes selectPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(74, 142, 194, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 15px rgba(74, 142, 194, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(74, 142, 194, 0);
+  }
+}
+
+/* ===== 蓝色粒子效果 ===== */
+.particle {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  background: var(--accent-primary);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: particleFloat 1.5s ease-out forwards;
+  box-shadow: 0 0 6px rgba(74, 142, 194, 0.8);
+}
+
+@keyframes particleFloat {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100px) scale(0);
+  }
+}
+
+/* ===== 数字变化动画 ===== */
+.number-change {
+  animation: numberPop 0.3s ease;
+}
+
+@keyframes numberPop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+    color: var(--accent-primary-light);
+    text-shadow: 0 0 20px rgba(74, 142, 194, 0.8);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* ===== 摇晃动画 ===== */
+.shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+  20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+/* ===== 弹跳动画 ===== */
+.bounce {
+  animation: bounce 0.6s ease;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+/* ===== 淡入淡出 ===== */
+.fade-in {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.fade-out {
+  animation: fadeOut 0.3s ease;
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/* ===== 滑入滑出 ===== */
+.slide-in-left {
+  animation: slideInLeft 0.3s ease;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.slide-in-right {
+  animation: slideInRight 0.3s ease;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.slide-in-up {
+  animation: slideInUp 0.3s ease;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-up {
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== 发光脉冲 - 冷蓝色调 ===== */
+.glow-pulse {
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(74, 142, 194, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(74, 142, 194, 0.6);
+  }
+}
+
+/* ===== 旋转加载 ===== */
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ===== 缩放弹跳 ===== */
+.scale-bounce {
+  animation: scaleBounce 0.5s ease;
+}
+
+@keyframes scaleBounce {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+/* ===== 闪光效果 ===== */
+.shimmer-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-effect::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(74, 142, 194, 0.2),
+    transparent
+  );
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* ===== HP 变化动画 ===== */
+.hp-change {
+  position: absolute;
+  font-family: var(--font-number);
+  font-size: 1.5rem;
+  font-weight: bold;
+  pointer-events: none;
+  animation: hpFloat 1s ease-out forwards;
+}
+
+.hp-change.damage {
+  color: var(--color-danger);
+  text-shadow: 0 0 10px rgba(196, 64, 64, 0.8);
+}
+
+.hp-change.heal {
+  color: var(--color-success);
+  text-shadow: 0 0 10px rgba(76, 175, 125, 0.8);
+}
+
+@keyframes hpFloat {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-60px) scale(0.8);
+  }
+}
+
+/* ===== 按钮点击波纹 ===== */
+.ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(74, 142, 194, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: rippleEffect 0.6s ease-out;
+}
+
+@keyframes rippleEffect {
+  to {
+    width: 300px;
+    height: 300px;
+    opacity: 0;
+  }
+}
+
+/* ===== 通知动画 ===== */
+.notification {
+  animation: notificationSlide 0.3s ease;
+}
+
+@keyframes notificationSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== 震动效果 ===== */
+.vibrate {
+  animation: vibrate 0.3s ease;
+}
+
+@keyframes vibrate {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-3px) rotate(-1deg); }
+  75% { transform: translateX(3px) rotate(1deg); }
+}
+
+/* ===== 页面滑动切换动画 ===== */
+.page-slide-left .page-exit {
+  animation: pageSlideOutLeft 0.3s ease-in forwards;
+}
+
+.page-slide-left .page-enter {
+  animation: pageSlideInFromRight 0.4s ease-out forwards;
+}
+
+.page-slide-right .page-exit {
+  animation: pageSlideOutRight 0.3s ease-in forwards;
+}
+
+.page-slide-right .page-enter {
+  animation: pageSlideInFromLeft 0.4s ease-out forwards;
+}
+
+.page-slide-up .page-exit {
+  animation: pageSlideOutUp 0.3s ease-in forwards;
+}
+
+.page-slide-up .page-enter {
+  animation: pageSlideInFromBottom 0.4s ease-out forwards;
+}
+
+@keyframes pageSlideInFromRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pageSlideOutLeft {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+@keyframes pageSlideInFromLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pageSlideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes pageSlideInFromBottom {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pageSlideOutUp {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+
+/* ===== 属性计数动画 ===== */
+.counting {
+  transition: none;
+}
+
+.count-complete {
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+  color: var(--accent-primary-light);
+  text-shadow: 0 0 10px rgba(74, 142, 194, 0.5);
+}
+
+/* ===== ChoiceCard 选中动画 ===== */
+.choice-card {
+  transition: all var(--transition-fast);
+}
+
+.choice-card.selected,
+.choice-card.tap-selected {
+  animation: choiceSelected 0.3s ease;
+}
+
+@keyframes choiceSelected {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* ===== 稀有度光效 ===== */
+.rarity-glow {
+  position: relative;
+}
+
+.rarity-glow::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+  pointer-events: none;
+}
+
+.rarity-glow:hover::after {
+  opacity: 0.3;
+}
+
+.rarity-glow.rarity-common::after {
+  background: var(--rarity-common);
+  filter: blur(8px);
+}
+
+.rarity-glow.rarity-uncommon::after {
+  background: var(--rarity-uncommon);
+  filter: blur(8px);
+}
+
+.rarity-glow.rarity-rare::after {
+  background: var(--rarity-rare);
+  filter: blur(8px);
+}
+
+.rarity-glow.rarity-epic::after {
+  background: var(--rarity-epic);
+  filter: blur(8px);
+}
+
+.rarity-glow.rarity-legendary::after {
+  background: var(--rarity-legendary);
+  filter: blur(8px);
+}

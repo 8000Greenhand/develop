@@ -1,0 +1,381 @@
+/* DND RPG PWA - 新功能扩展样式 */
+
+/* ========== NPC面板 ========== */
+.npc-empty {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--text-secondary);
+}
+.npc-empty .hint {
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  opacity: 0.7;
+}
+.npc-card {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  border: 1px solid var(--border-color);
+  transition: border-color 0.3s;
+}
+.npc-card:hover {
+  border-color: var(--accent-color);
+}
+.npc-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+.npc-avatar {
+  font-size: 2rem;
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-tertiary);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.npc-info h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+.npc-role {
+  margin: 0.15rem 0 0;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+.npc-stats {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.85rem;
+}
+.npc-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.npc-stat span:first-child {
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+}
+.affinity-positive { color: #4caf50; font-weight: 600; }
+.affinity-negative { color: #f44336; font-weight: 600; }
+.affinity-neutral { color: var(--text-secondary); }
+.npc-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* ========== 休息弹窗 ========== */
+.rest-info {
+  margin-bottom: 1.5rem;
+}
+.rest-info p {
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+}
+.rest-info ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.rest-info ul li {
+  padding: 0.4rem 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  position: relative;
+  padding-left: 1.25rem;
+}
+.rest-info ul li::before {
+  content: '\2022';
+  position: absolute;
+  left: 0.25rem;
+  color: var(--accent-color);
+  font-weight: bold;
+}
+.rest-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+/* ========== 法术施放UI ========== */
+.spell-cast-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.spell-cast-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.spell-cast-card:hover:not(.disabled) {
+  border-color: var(--accent-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(74, 142, 194, 0.2);
+}
+.spell-cast-card.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.spell-cast-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+.spell-cast-info {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+.spell-cast-slot {
+  font-size: 0.7rem;
+  color: var(--accent-color);
+  margin-top: 0.25rem;
+}
+
+/* ========== 升级弹窗 ========== */
+.level-up-content {
+  text-align: center;
+}
+.level-up-header {
+  margin-bottom: 1.5rem;
+}
+.level-up-header h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.new-level {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent-color);
+}
+.level-up-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+}
+.level-up-stat {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.35rem 0;
+  font-size: 0.9rem;
+}
+.stat-positive {
+  color: #4caf50;
+  font-weight: 600;
+}
+.feat-selection {
+  text-align: left;
+  margin-bottom: 1.5rem;
+}
+.feat-selection h4 {
+  margin-bottom: 0.75rem;
+  color: var(--text-primary);
+}
+.feat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.feat-card {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.feat-card:hover {
+  border-color: var(--accent-color);
+}
+.feat-card.selected {
+  border-color: var(--accent-color);
+  background: rgba(74, 142, 194, 0.1);
+}
+.feat-name {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+.feat-description {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+/* ========== 专长标签 ========== */
+.char-feats {
+  margin-bottom: 0.75rem;
+}
+.char-feats h4 {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.4rem;
+}
+.feat-chip {
+  background: linear-gradient(135deg, #6a1b9a, #8e24aa);
+  color: white;
+  font-size: 0.75rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 1rem;
+  display: inline-block;
+  margin: 0.15rem;
+}
+
+/* ========== 技能检定结果 ========== */
+.skill-check-result {
+  padding: 1rem;
+  text-align: center;
+  animation: fadeIn 0.3s ease;
+}
+.skill-check-result .dice-result {
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 1rem 0;
+}
+.skill-check-result .dice-result.critical {
+  color: #ffd700;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+.skill-check-result .dice-result.fumble {
+  color: #f44336;
+  text-shadow: 0 0 20px rgba(244, 67, 54, 0.5);
+}
+.skill-check-result .check-outcome {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+.skill-check-result .check-details {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+}
+
+/* ========== 背包/装备系统 ========== */
+.inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+.inventory-slot {
+  aspect-ratio: 1;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  font-size: 0.65rem;
+  padding: 0.2rem;
+  text-align: center;
+}
+.inventory-slot:hover {
+  border-color: var(--accent-color);
+  transform: translateY(-1px);
+}
+.inventory-slot .item-icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.15rem;
+}
+.inventory-slot .item-quantity {
+  position: absolute;
+  bottom: 2px;
+  right: 4px;
+  font-size: 0.6rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+.inventory-slot.rarity-common { border-color: #9e9e9e; }
+.inventory-slot.rarity-uncommon { border-color: #4caf50; }
+.inventory-slot.rarity-rare { border-color: #2196f3; }
+.inventory-slot.rarity-epic { border-color: #9c27b0; }
+.inventory-slot.rarity-legendary { border-color: #ff9800; box-shadow: 0 0 8px rgba(255, 152, 0, 0.3); }
+
+.equipment-slots {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+.equipment-slot {
+  background: var(--bg-secondary);
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem;
+  text-align: center;
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  min-height: 3.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.equipment-slot.equipped {
+  border-style: solid;
+  border-color: var(--accent-color);
+  background: rgba(74, 142, 194, 0.05);
+}
+.equipment-slot .slot-label {
+  font-size: 0.6rem;
+  opacity: 0.6;
+  margin-bottom: 0.2rem;
+}
+.equipment-slot .slot-item {
+  font-size: 1rem;
+}
+
+.gold-display {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  margin-bottom: 1rem;
+  font-weight: 600;
+  color: #ffd700;
+}
+
+/* ========== 响应式 ========== */
+@media (max-width: 480px) {
+  .spell-cast-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .npc-stats {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .equipment-slots {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .header-actions {
+    gap: 0.15rem;
+  }
+  .header-btn {
+    font-size: 0.9rem;
+    min-width: 2rem;
+    min-height: 2rem;
+  }
+}

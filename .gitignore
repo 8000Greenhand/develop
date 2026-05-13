@@ -1,0 +1,7 @@
+﻿# 忽略不需要的文件
+*.log
+*.pid
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
