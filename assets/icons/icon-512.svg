@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bgGrad512" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e"/>
+      <stop offset="100%" style="stop-color:#0a0a0f"/>
+    </linearGradient>
+    <linearGradient id="goldGrad512" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#d4af37"/>
+      <stop offset="100%" style="stop-color:#8b6914"/>
+    </linearGradient>
+    <filter id="glow512">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- 背景 -->
+  <rect width="512" height="512" rx="64" fill="url(#bgGrad512)"/>
+  
+  <!-- 龙形剪影 -->
+  <g transform="translate(256, 210)" filter="url(#glow512)">
+    <!-- 龙身 -->
+    <path d="M0 -130 
+             C50 -130 90 -90 105 -50
+             C130 -65 155 -50 145 -15
+             C170 0 185 40 160 65
+             C145 90 120 105 95 90
+             C65 120 25 130 0 115
+             C-25 130 -65 120 -95 90
+             C-120 105 -145 90 -160 65
+             C-185 40 -170 0 -145 -15
+             C-155 -50 -130 -65 -105 -50
+             C-90 -90 -50 -130 0 -130 Z" 
+          fill="url(#goldGrad512)" opacity="0.9"/>
+    
+    <!-- 龙眼 -->
+    <circle cx="-65" cy="-65" r="15" fill="#8b0000"/>
+    <circle cx="65" cy="-65" r="15" fill="#8b0000"/>
+    
+    <!-- 翅膀装饰 -->
+    <path d="M-140 -20 Q-180 -60 -160 -100 Q-150 -70 -130 -50" 
+          fill="url(#goldGrad512)" opacity="0.6"/>
+    <path d="M140 -20 Q180 -60 160 -100 Q150 -70 130 -50" 
+          fill="url(#goldGrad512)" opacity="0.6"/>
+    
+    <!-- 骰子图标 -->
+    <g transform="translate(0, 170)">
+      <rect x="-50" y="-50" width="100" height="100" rx="12" 
+            fill="#16213e" stroke="url(#goldGrad512)" stroke-width="6"/>
+      <circle cx="0" cy="0" r="15" fill="url(#goldGrad512)"/>
+      <circle cx="-30" cy="-30" r="8" fill="url(#goldGrad512)"/>
+      <circle cx="30" cy="-30" r="8" fill="url(#goldGrad512)"/>
+      <circle cx="-30" cy="30" r="8" fill="url(#goldGrad512)"/>
+      <circle cx="30" cy="30" r="8" fill="url(#goldGrad512)"/>
+    </g>
+  </g>
+  
+  <!-- 装饰符文 -->
+  <g opacity="0.3" stroke="url(#goldGrad512)" stroke-width="2" fill="none">
+    <!-- 左上角 -->
+    <path d="M50 80 L80 50 L110 80"/>
+    <path d="M50 80 L50 110"/>
+    
+    <!-- 右上角 -->
+    <path d="M402 80 L432 50 L462 80"/>
+    <path d="M462 80 L462 110"/>
+    
+    <!-- 左下角 -->
+    <path d="M50 432 L80 462 L110 432"/>
+    <path d="M50 432 L50 402"/>
+    
+    <!-- 右下角 -->
+    <path d="M402 432 L432 462 L462 432"/>
+    <path d="M462 432 L462 402"/>
+    
+    <!-- 顶部中间 -->
+    <circle cx="256" cy="40" r="8" fill="url(#goldGrad512)" stroke="none"/>
+    
+    <!-- 底部中间 -->
+    <circle cx="256" cy="472" r="8" fill="url(#goldGrad512)" stroke="none"/>
+  </g>
+</svg>

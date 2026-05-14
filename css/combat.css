@@ -1,0 +1,653 @@
+/* 战斗面板样式 - rpg-dnd5e-web 石板风格 */
+
+/* ===== 战斗页面 ===== */
+.combat-page {
+  background: linear-gradient(180deg, #1a1d2e 0%, #0f1119 100%);
+}
+
+.combat-page.active {
+  display: flex;
+  flex-direction: column;
+}
+
+#combat-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-md);
+  max-width: 600px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ===== 战斗头部 ===== */
+.combat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-md);
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--spacing-md);
+  position: relative;
+}
+
+.combat-header h2 {
+  font-family: var(--font-title);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--accent-primary-light);
+  letter-spacing: 2px;
+}
+
+.turn-indicator {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  padding: var(--spacing-xs) var(--spacing-md);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+/* ===== 战斗者列表 ===== */
+.combatants-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.combatant-card {
+  padding: var(--spacing-md);
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-fast);
+  position: relative;
+  overflow: hidden;
+}
+
+.combatant-card.player {
+  border-color: var(--accent-primary);
+  box-shadow: var(--shadow-glow);
+}
+
+.combatant-card.enemy {
+  border-color: rgba(196, 64, 64, 0.6);
+  background: linear-gradient(135deg, var(--bg-card) 0%, rgba(60, 20, 20, 0.3) 100%);
+}
+
+.combatant-card.active-turn {
+  animation: activeGlow 1.5s ease-in-out infinite;
+}
+
+@keyframes activeGlow {
+  0%, 100% {
+    box-shadow: var(--shadow-glow);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(74, 142, 194, 0.5);
+  }
+}
+
+.combatant-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-sm);
+}
+
+.combatant-name {
+  font-family: var(--font-title);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.combatant-ac {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-default);
+}
+
+/* ===== HP 条 - 渐变色 ===== */
+.hp-bar {
+  width: 100%;
+}
+
+.hp-bar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-xs);
+}
+
+.hp-bar-name {
+  font-family: var(--font-title);
+  font-size: 0.85rem;
+  color: var(--text-primary);
+}
+
+.hp-bar-value {
+  font-family: var(--font-number);
+  font-size: 0.85rem;
+  color: var(--accent-primary-light);
+}
+
+.hp-bar-track {
+  width: 100%;
+  height: 12px;
+  background: var(--bg-secondary);
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--border-default);
+}
+
+.hp-bar-fill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width var(--transition-normal), background var(--transition-fast);
+}
+
+/* HP 渐变色变化 */
+.hp-bar-fill.healthy {
+  background: linear-gradient(90deg, #3d8c5f 0%, var(--hp-healthy) 100%);
+}
+
+.hp-bar-fill.wounded {
+  background: linear-gradient(90deg, #b8860b 0%, var(--hp-wounded) 100%);
+}
+
+.hp-bar-fill.critical {
+  background: linear-gradient(90deg, #a02020 0%, var(--hp-critical) 100%);
+  animation: criticalPulse 0.5s ease-in-out infinite;
+}
+
+@keyframes criticalPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* ===== 战斗动作按钮 ===== */
+.combat-actions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.combat-action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-md);
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  color: var(--text-primary);
+  font-family: var(--font-title);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  min-height: 70px;
+}
+
+.combat-action-btn:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--accent-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow);
+}
+
+.combat-action-btn:active {
+  transform: translateY(0);
+}
+
+.combat-action-btn span:first-child {
+  font-size: 1.5rem;
+}
+
+/* ===== 战斗日志 ===== */
+.combat-log {
+  flex: 1;
+  min-height: 120px;
+  max-height: 200px;
+  overflow-y: auto;
+  padding: var(--spacing-md);
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--spacing-md);
+}
+
+.log-entry {
+  padding: var(--spacing-xs) 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-default);
+  animation: fadeSlideIn 0.3s ease;
+}
+
+.log-entry:last-child {
+  border-bottom: none;
+}
+
+.log-entry.critical {
+  color: var(--accent-primary-light);
+  font-weight: bold;
+}
+
+.log-entry.hit {
+  color: var(--color-success);
+}
+
+.log-entry.miss {
+  color: var(--color-danger);
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ===== 骰子选择器 ===== */
+.dice-roller-mini {
+  display: flex;
+  justify-content: center;
+}
+
+.roll-d20-btn {
+  padding: var(--spacing-md) var(--spacing-xl);
+  font-family: var(--font-title);
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(180deg, var(--accent-primary) 0%, var(--accent-primary-dark) 100%);
+  border: none;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-glow);
+  letter-spacing: 2px;
+}
+
+.roll-d20-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(74, 142, 194, 0.5);
+}
+
+.roll-d20-btn:active {
+  transform: scale(0.98);
+}
+
+/* ===== 骰子选择器 ===== */
+.dice-selector {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+}
+
+.dice-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-sm);
+  min-width: 50px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.dice-btn:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--accent-primary);
+  transform: translateY(-2px);
+}
+
+.dice-btn span:first-child {
+  font-size: 1.5rem;
+}
+
+.dice-label {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+}
+
+/* ===== 骰子全屏选择器 ===== */
+.dice-roller-full {
+  text-align: center;
+}
+
+.dice-display {
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.dice-result {
+  min-height: 60px;
+  margin-bottom: var(--spacing-lg);
+}
+
+.result-value {
+  font-family: var(--font-number);
+  font-size: 4rem;
+  font-weight: bold;
+  color: var(--accent-primary-light);
+  text-shadow: 0 0 20px rgba(74, 142, 194, 0.5);
+}
+
+.result-value.nat-20 {
+  color: var(--color-success);
+  text-shadow: 0 0 30px rgba(76, 175, 125, 0.6);
+  animation: nat20 0.5s ease-in-out;
+}
+
+.result-value.nat-1 {
+  color: var(--color-danger);
+  text-shadow: 0 0 30px rgba(196, 64, 64, 0.6);
+}
+
+.crit-text {
+  display: block;
+  font-size: 1.2rem;
+  color: var(--color-success);
+  margin-top: var(--spacing-sm);
+  animation: bounce 0.5s ease;
+}
+
+.fumble-text {
+  display: block;
+  font-size: 1rem;
+  color: var(--color-danger);
+  margin-top: var(--spacing-sm);
+}
+
+@keyframes nat20 {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.dice-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-lg);
+}
+
+.dice-big-btn {
+  padding: var(--spacing-lg);
+  font-family: var(--font-title);
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--text-primary);
+  background: var(--bg-card);
+  border: 2px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.dice-big-btn:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--accent-primary);
+  transform: scale(1.05);
+  box-shadow: var(--shadow-glow);
+}
+
+.dice-big-btn:active {
+  transform: scale(0.95);
+}
+
+.dice-options {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-lg);
+}
+
+.dice-options label {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.dice-options input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent-primary);
+}
+
+.dice-result-rolls {
+  display: flex;
+  gap: var(--spacing-lg);
+}
+
+.dice-result-rolls .roll {
+  font-family: var(--font-number);
+  font-size: 3rem;
+  font-weight: bold;
+  color: var(--text-muted);
+  opacity: 0.5;
+}
+
+.dice-result-rolls .roll.selected {
+  color: var(--accent-primary-light);
+  opacity: 1;
+  text-shadow: 0 0 15px rgba(74, 142, 194, 0.5);
+}
+
+.roll-type {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-top: var(--spacing-sm);
+}
+
+/* ===== 回合结束提示 ===== */
+.turn-end-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 12, 18, 0.9);
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--transition-normal);
+}
+
+.turn-end-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.turn-end-content {
+  background: var(--bg-card);
+  border: 1px solid var(--accent-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  text-align: center;
+  box-shadow: var(--shadow-glow);
+}
+
+.turn-end-content h3 {
+  font-family: var(--font-title);
+  font-size: 1.5rem;
+  color: var(--accent-primary-light);
+  margin-bottom: var(--spacing-md);
+}
+
+/* ===== 遭遇弹窗 ===== */
+.encounter-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-md);
+}
+
+.encounter-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  animation: fadeIn 0.3s ease;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.encounter-backdrop.clickable {
+  pointer-events: auto;
+}
+
+.encounter-content {
+  position: relative;
+  max-width: 500px;
+  width: 100%;
+  background: var(--bg-card);
+  border: 1px solid var(--accent-primary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-hover);
+  animation: encounterSlideIn 0.4s ease-out;
+  max-height: 80vh;
+  overflow-y: auto;
+  z-index: 1;
+}
+
+@keyframes encounterSlideIn {
+  from {
+    transform: scale(0.9) translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+.encounter-header {
+  padding: var(--spacing-md);
+  border-bottom: 1px solid var(--border-default);
+  background: var(--bg-secondary);
+}
+
+.encounter-title {
+  font-family: var(--font-title);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--accent-primary-light);
+  text-align: center;
+}
+
+.encounter-body {
+  padding: var(--spacing-md);
+}
+
+.encounter-text {
+  margin-bottom: var(--spacing-md);
+}
+
+.encounter-text p {
+  color: var(--text-primary);
+  line-height: 1.6;
+  margin-bottom: var(--spacing-sm);
+}
+
+.encounter-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  border-top: 1px solid var(--border-default);
+  background: var(--bg-secondary);
+}
+
+.encounter-btn {
+  padding: var(--spacing-md);
+  font-family: var(--font-title);
+  font-size: 1rem;
+  color: var(--text-primary);
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: center;
+}
+
+.encounter-btn:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--accent-primary);
+}
+
+.encounter-btn.primary {
+  background: var(--accent-primary);
+  color: white;
+  border-color: var(--accent-primary);
+}
+
+.encounter-btn.primary:hover {
+  background: var(--accent-primary-light);
+}
+
+/* ===== 响应式 ===== */
+@media (max-width: 480px) {
+  .combat-actions {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .combatant-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-xs);
+  }
+  
+  .dice-buttons {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
